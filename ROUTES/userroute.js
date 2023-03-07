@@ -1,0 +1,12 @@
+const express=require("express")
+const router=express.Router()
+const user = require("../MODELS/user")
+const catchAsync=require("../utils/catchasync")
+const passport=require("passport")
+const usercontroller=require("../controller/userauth")
+router.get("/register",usercontroller.renderRegister)
+router.post("/register",catchAsync(usercontroller.postRegister))
+router.get("/login",usercontroller.renderLogin)
+router.post("/login",passport.authenticate("local",{failureFlash:true,failureRedirect:"/login",keepSessionInfo:true}),usercontroller.postLogin)
+router.get("/logout",usercontroller.logout)
+module.exports=router
